@@ -10,7 +10,7 @@ Cartridge-Vendor: 'Jelastic'
 Categories:
   - service
   - embedded
-Source-Url: https://github.com/ihorman/openshift-jelastic-glassfish-v40.git
+Source-Url: https://github.com/jelastic-public-cartridges/openshift-jelastic-glassfish-v40.git
 Website: http://jelastic.com/
 Help-Topics:
   "Developer Center": https://jelastic.com
