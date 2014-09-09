@@ -5,7 +5,6 @@ This cartridge provides [GlassFish 4](https://glassfish.java.net/) on Jelastic P
 
 Improvements of the 4th version includes higher productivity, HTML5 support, and implementation of the Java EE 7 specifications, what allows to use all its features.
 
-
 Follow the [link](http://ops-docs.jelastic.com/private-add-cartridge) in order to find out how to enable the current cartridge at Jelastic dashboard.
 
 ### What Jelastic cartridge is?
