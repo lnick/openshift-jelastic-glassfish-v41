@@ -7,4 +7,4 @@ for dir in logs tmp pid cache  env; do
 done
 
 [ -d "/opt/repo/logs" ] && rmdir /opt/repo/logs
-ln -s /opt/repo/versions/4.0/glassfish/domains/domain1/logs /opt/repo/logs
+ln -s /opt/repo/versions/4.1/glassfish/domains/domain1/logs /opt/repo/logs

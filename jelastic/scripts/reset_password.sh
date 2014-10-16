@@ -1,6 +1,6 @@
 include os output;
 
-AS_ADMIN="/opt/repo/versions/4.0/bin/asadmin";
+AS_ADMIN="/opt/repo/versions/4.1/bin/asadmin";
 EMPTY_PASS='userproto;{SSHA256}DdW1VfFCD0AqbQFzsu6Swqel1g1gZZ6f1m87JX6FQYSpu1X/BxTX5A==;asadmin';
 PASS_FILE="/opt/repo/.gfpass";
 
@@ -19,7 +19,7 @@ function _setPassword() {
                 writeJSONResponceErr "result=>4063" "message=>Password did not set";
         }
 
-        admin_key_file="/opt/repo/versions/4.0/glassfish/domains/domain1/config/admin-keyfile";
+        admin_key_file="/opt/repo/versions/4.1/glassfish/domains/domain1/config/admin-keyfile";
         echo $J_OPENSHIFT_APP_ADM_PASSWORD > $PASS_FILE;
         echo $EMPTY_PASS | sed 's/userproto/admin/g' > $admin_key_file;
         echo $EMPTY_PASS | sed 's/userproto/jelastic/g' >> $admin_key_file;

@@ -3,7 +3,7 @@
 # Simple deploy and undeploy scenarios for Jetty9
 
 WGET=$(which wget);
-AS_ADMIN="/opt/repo/versions/4.0/bin/asadmin";
+AS_ADMIN="/opt/repo/versions/4.1/bin/asadmin";
 PASS_FILE="/opt/repo/.gfpass";
 ADMIN_USER="jelastic";
 include output;
