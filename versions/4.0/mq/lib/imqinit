@@ -134,6 +134,7 @@ findj2se() {
 
     Darwin)
             _j2se_locations="\
+/Library/Java/JavaVirtualMachines/jdk1.7.* \
 /Library/Java/Home \
 /usr \
 "

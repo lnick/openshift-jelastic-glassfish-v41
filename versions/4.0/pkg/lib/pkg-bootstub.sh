@@ -2,7 +2,7 @@
 #
 # DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 #
-# Copyright (c) 2008-2010 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2008-2014 Oracle and/or its affiliates. All rights reserved.
 #
 # The contents of this file are subject to the terms of either the GNU
 # General Public License Version 2 only ("GPL") or the Common Development
@@ -98,8 +98,8 @@ locate_java() {
             minor="0"
         fi
 
-        # We want 1.5 or newer
-        if [ "$major" -eq "1" -a "$minor" -ge "5" ];  then
+        # We want 1.7 or newer
+        if [ "$major" -eq "1" -a "$minor" -ge "7" ];  then
             echo "$j/java"
             return
         fi
@@ -155,6 +155,9 @@ create_bootstrap_props() {
         echo "proxy.use.system=true" >> "$BOOTSTRAPPROPS"
     fi
 
+    # Refresh all catalogs
+    echo "refresh.catalog=all" >> "$BOOTSTRAPPROPS"
+
     # Image path is passed on the command line. See bug 376
     image_path="$my_home/.."
 }
@@ -166,6 +169,7 @@ cleanup_bootstrap_props() {
 # Location of BOOTSTRAP jar file, relative to INSTALL_HOME
 BOOTSTRAPJAR="pkg/lib/pkg-bootstrap.jar"
 BOOTSTRAPPROPS="/tmp/pkg-bootstrap$$.props"
+JAVACLIENTJAR="pkg/lib/pkg-client.jar"
 
 
 # Find out where we are installed
@@ -180,7 +184,7 @@ my_java=`locate_java`
 if [ -z "$my_java" ]; then
     echo 
     echo "Could not locate a suitable Java runtime."
-    echo "Please ensure that you have Java 5 or newer installed on your system"
+    echo "Please ensure that you have Java 7 or newer installed on your system"
     echo "and accessible via your PATH or by setting JAVA_HOME"
     exit 1
 fi
@@ -216,6 +220,7 @@ if [ "$ans" != "y" ]; then
 fi
 
 BOOTSTRAPJAR="$my_home/../$BOOTSTRAPJAR"
+JAVACLIENTJAR="$my_home/../$JAVACLIENTJAR"
 
 if [ ! -f "$BOOTSTRAPJAR" ]; then
     echo "Software installation failed."

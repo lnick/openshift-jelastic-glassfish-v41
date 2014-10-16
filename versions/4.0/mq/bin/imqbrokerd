@@ -89,7 +89,11 @@ if [ ! -d "$imq_varhome/instances" ]; then
 fi
 
 # Specify default arguments to the JVM here
+if [ "$imq_os" = "Linux" ]; then
+_def_jvm_args="-Xms192m -Xmx192m -Xss256k"
+else
 _def_jvm_args="-Xms192m -Xmx192m -Xss192k"
+fi
 # We will add vendor-specific JVM flags below
 
 _command=$0

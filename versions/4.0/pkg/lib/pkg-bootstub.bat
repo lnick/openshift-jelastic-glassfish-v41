@@ -3,7 +3,7 @@ rem
 rem
 rem DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
 rem
-rem Copyright (c) 2008-2010 Oracle and/or its affiliates. All rights reserved.
+rem Copyright (c) 2008-2014 Oracle and/or its affiliates. All rights reserved.
 rem
 rem The contents of this file are subject to the terms of either the GNU
 rem General Public License Version 2 only ("GPL") or the Common Development
@@ -63,6 +63,7 @@ if /I %MY_NAME%==pkg.bat set MY_NAME=pkg
 @REM Location of bootstrap jar file relative to INSTALL_HOME
 set BOOTSTRAPJAR=pkg/lib/pkg-bootstrap.jar
 set BOOTSTRAPPROPS=%TEMP%\pkg-bootstrap%RANDOM%.props
+set JAVACLIENTJAR=pkg/lib/pkg-client.jar
 
 @REM Go find Java
 set MY_JAVA_HOME="none"
@@ -72,16 +73,11 @@ set JRMT_JDK_KEY=HKEY_LOCAL_MACHINE\SOFTWARE\JRockit\Java Development Kit
 set JRMT_JRE_KEY=HKEY_LOCAL_MACHINE\SOFTWARE\JRockit\Java Runtime Environment
 set JRRT_KEY=HKEY_LOCAL_MACHINE\SOFTWARE\JRockit\Real Time
 
-@REM Get Java runtime location from the registry. We try 1.6 first, then 1.5
-(FOR /F "tokens=1,2*" %%A IN ('reg query "%JDK_KEY%\1.6" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
-(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JRE_KEY%\1.6" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
-(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JDK_KEY%\1.5" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
-(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JRE_KEY%\1.5" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
-
-@REM Next try Oracle JRockit runtimes
-(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JRMT_JDK_KEY%\1.6" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
-(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JRMT_JRE_KEY%\1.6" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
-(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JRRT_KEY%\1.6" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
+@REM Get Java runtime location from the registry. We try 1.7 first, then 1.8
+(FOR /F "tokens=1,2*" %%A IN ('reg query "%JDK_KEY%\1.7" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
+(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JRE_KEY%\1.7" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
+(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JDK_KEY%\1.8" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
+(if not exist "%MY_JAVA_HOME%\bin" FOR /F "tokens=1,2*" %%A IN ('reg query "%JRE_KEY%\1.8" /v JavaHome') DO SET MY_JAVA_HOME=%%C) 2>nul
 
 @REM Could not get from registry. See if JAVA_HOME is set
 if not exist "%MY_JAVA_HOME%\bin" set MY_JAVA_HOME=%JAVA_HOME%
@@ -138,6 +134,7 @@ if defined HTTP_PROXY echo proxy.URL=%HTTP_PROXY%>> "%BOOTSTRAPPROPS%"
 if defined HTTPS_PROXY echo proxy.secure.URL=%HTTPS_PROXY%>> "%BOOTSTRAPPROPS%"
 if not defined HTTP_PROXY echo proxy.use.system=true>>"%BOOTSTRAPPROPS%"
 if /I %MY_NAME%==updatetool echo install.updatetool=true>> "%BOOTSTRAPPROPS%"
+echo refresh.catalog=all>> "%BOOTSTRAPPROPS%"
 
 echo. >> "%BOOTSTRAPPROPS%"
 
@@ -193,7 +190,7 @@ goto findjavadone
 
 :nojavaerror
 echo.
-echo Failed to locate a Java runtime. Please install Java SE 5 or Java SE 6.
+echo Failed to locate a Java runtime. Please install Java SE 7 or newer.
 echo If you already have one of these installed on your system then either:
 echo Set the JAVA_HOME environment variable to the Java SE install location.
 echo  or
