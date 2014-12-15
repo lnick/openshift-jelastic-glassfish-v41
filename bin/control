@@ -15,7 +15,7 @@ start() {
                 return 1
             fi
         fi
-        su jelastic -c "$GLASSFISH_HOME/bin/asadmin start-domain domain1"
+        $GLASSFISH_HOME/bin/asadmin start-domain domain1
         RETVAL=$?
         PID=$(pgrep -f glassfish.jar)
         echo
@@ -31,7 +31,7 @@ stop() {
             echo
             return 1;
         fi
-        su jelastic -c "$GLASSFISH_HOME/bin/asadmin stop-domain domain1"
+        $GLASSFISH_HOME/bin/asadmin stop-domain domain1
         RETVAL=$?
         echo
         [ $RETVAL -eq 0 ] && rm -f /opt/repo/lock/glassfish && rm /opt/repo/pid/glassfish.pid;
