@@ -2,7 +2,7 @@
 
 set -u
 
-for dir in logs tmp pid lock cache  env; do
+for dir in logs tmp pid lock cache env; do
 	mkdir -p $dir
 done
 
