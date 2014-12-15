@@ -1,15 +1,53 @@
 #!/bin/sh
+. /etc/init.d/functions
+
+prog="glassfish"
+
 GLASSFISH_HOME=${GLASSFISH_HOME:-"/opt/repo/versions/4.1/"}
+
+start() {
+        echo  $"Starting $prog: "
+        if [ -e /opt/repo/lock/glassfish ]; then
+            if [ -e /opt/repo/pid/glassfish.pid ] && [ -e /proc/`cat /opt/repo/pid/glassfish.pid` ]; then
+                echo -n $"cannot start glassfish: glassfish is already running.";
+                failure $"cannot start glassfish: glassfish already running.";
+                echo
+                return 1
+            fi
+        fi
+        su jelastic -c "$GLASSFISH_HOME/bin/asadmin start-domain domain1"
+        RETVAL=$?
+        PID=$(pgrep -f glassfish.jar)
+        echo
+        [ $RETVAL -eq 0 ] && touch /opt/repo/lock/glassfish && echo $PID > /opt/repo/pid/glassfish.pid;
+        return $RETVAL
+}
+
+stop() {
+        echo  $"Stopping $prog: "
+        if [ ! -e /opt/repo/lock/glassfish ]; then
+            echo -n $"cannot stop glassfish: glassfish is not running."
+            failure $"cannot stop glassfish: glassfish is not running."
+            echo
+            return 1;
+        fi
+        su jelastic -c "$GLASSFISH_HOME/bin/asadmin stop-domain domain1"
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f /opt/repo/lock/glassfish && rm /opt/repo/pid/glassfish.pid;
+        return $RETVAL
+}
 
 case "$1" in
 start)
-    $GLASSFISH_HOME/bin/asadmin start-domain
+    start
     ;;
 stop)
-    $GLASSFISH_HOME/bin/asadmin stop-domain
+    stop
     ;;
 restart)
-    $GLASSFISH_HOME/bin/asadmin restart-domain
+    stop
+    start
     ;;
 build)
     echo 
