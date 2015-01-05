@@ -190,6 +190,8 @@
         <jvm-options>-Djava.security.policy=${com.sun.aas.instanceRoot}/config/server.policy</jvm-options>
         <jvm-options>-Djava.security.auth.login.config=${com.sun.aas.instanceRoot}/config/login.conf</jvm-options>
         <jvm-options>-Dcom.sun.enterprise.security.httpsOutboundKeyAlias=s1as</jvm-options>
+        <jvm-options>-Xms32m</jvm-options>
+        <jvm-options>-Xmn30m</jvm-options>
         <jvm-options>-Xmx512m</jvm-options>
         <jvm-options>-Djavax.net.ssl.keyStore=${com.sun.aas.instanceRoot}/config/keystore.jks</jvm-options>
         <jvm-options>-Djavax.net.ssl.trustStore=${com.sun.aas.instanceRoot}/config/cacerts.jks</jvm-options>
@@ -378,6 +380,8 @@
              <jvm-options>-DANTLR_USE_DIRECT_CLASS_LOADING=true</jvm-options>
              <jvm-options>-Dcom.sun.enterprise.config.config_environment_factory_class=com.sun.enterprise.config.serverbeans.AppserverConfigEnvironmentFactory</jvm-options>
              <jvm-options>-XX:NewRatio=2</jvm-options>
+             <jvm-options>-Xms32m</jvm-options>
+             <jvm-options>-Xmn30m</jvm-options>
              <jvm-options>-Xmx512m</jvm-options>
              <!-- Configure post startup bundle list here. This is a comma separated list of bundle sybolic names.
                   The remote shell bundle has been disabled for cluster and remote instances. -->
