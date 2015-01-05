@@ -6,7 +6,7 @@ SED=$(which sed);
 # config optimizer for jetty8
 #
 
-JETTY_START_SCRIPT="${OPENSHIFT_JETTY9_DIR}.openshift/action_hooks/start";
+#JETTY_START_SCRIPT="${OPENSHIFT_JETTY9_DIR}.openshift/action_hooks/start";
 
 [ -z "$XMS" ] && { XMS=32; }
 memory_total=`free -m | grep Mem | awk '{print $2}'`;
