@@ -15,6 +15,10 @@ start() {
                 return 1
             fi
         fi
+        [ -z "$XMS" ] && { XMS=32M; }
+        memory_total=`free -m | grep Mem | awk '{print $2}'`;
+        [ -z "$XMX" ] && { let XMX=memory_total-35; XMX="${XMX}M"; }
+        sed -i "s/-Xmx512m/-Xmx${XMX}/g" "/opt/repo/versions/4.1/glassfish/domains/domain1/config/domain.xml";
         $GLASSFISH_HOME/bin/asadmin start-domain domain1
         RETVAL=$?
         PID=$(pgrep -f glassfish.jar)
