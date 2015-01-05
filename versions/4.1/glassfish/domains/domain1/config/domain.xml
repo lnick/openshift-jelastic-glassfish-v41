@@ -231,6 +231,10 @@
         <jvm-options>-XX:NewRatio=2</jvm-options>
         <!-- Woodstox property needed to pass StAX TCK -->
         <jvm-options>-Dcom.ctc.wstx.returnNullForDefaultNamespace=true</jvm-options>
+	<jvm-options>-XX:+UseParNewGC</jvm-options>
+        <jvm-options>-XX:-UseAdaptiveSizePolicy</jvm-options>
+        <jvm-options>-javaagent:/opt/repo/versions/4.1/glassfish/lib/jelastic-gc-agent.jar</jvm-options>
+        <jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
       </java-config>
       <network-config>
         <protocols>
@@ -410,6 +414,10 @@
                   If we don't set false, everytime server starts from clean osgi cache, the file gets rewritten.
              -->
              <jvm-options>-Dfelix.fileinstall.disableConfigSave=false</jvm-options>
+	     <jvm-options>-XX:+UseParNewGC</jvm-options>
+             <jvm-options>-XX:-UseAdaptiveSizePolicy</jvm-options>
+	     <jvm-options>-javaagent:/opt/repo/versions/4.1/glassfish/lib/jelastic-gc-agent.jar</jvm-options>
+             <jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
              <!-- End of OSGi bundle configurations -->
         </java-config>
          <availability-service>
