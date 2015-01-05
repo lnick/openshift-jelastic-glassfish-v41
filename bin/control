@@ -15,7 +15,6 @@ start() {
                 return 1
             fi
         fi
-        [ -z "$XMS" ] && { XMS=32M; }
         memory_total=`free -m | grep Mem | awk '{print $2}'`;
         [ -z "$XMX" ] && { let XMX=memory_total-35; }
         sed -i "s/-Xmx[0-9]*m/-Xmx${XMX}m/g" "/opt/repo/versions/4.1/glassfish/domains/domain1/config/domain.xml";
